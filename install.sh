@@ -9,6 +9,7 @@ echo "    #                  Version 0.1                 #"
 echo "    #            Powered by https://pa.ci          #"
 echo "    ################################################"
 
+# March 21, 2023
 
 # 检查是否为root用户
 if [ $(id -u) != "0" ]; then
