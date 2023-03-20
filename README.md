@@ -6,7 +6,7 @@
 
 本程序会安装一个主程序，安装过程中需要`wget`，安装完成后使用`systemd`守护主程序的运行。除此之外，不会安装其他依赖，不会修改文件，CPU占用极低，内存占用约10MB，平均每天总流量小于 1MB。
 
-官方内容请参见：https://hostloc.com/thread-1149787-1-1.html 
+官方内容请参见：https://hostloc.com/thread-1149787-1-1.html 和 https://ping0.cc/Ip/join 
 
 
 
