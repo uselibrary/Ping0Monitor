@@ -1,0 +1,13 @@
+[Unit]
+Description=Ping0 Monitor Service
+Documentation=https://ping0.cc/ping
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/ping0/ping0 username 
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
