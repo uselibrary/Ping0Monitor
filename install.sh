@@ -6,9 +6,9 @@ echo "    #                                              #"
 echo "    #              ping0.cc分布式检测计划           #"
 echo "    #                 https://ping0.cc             #"
 echo "    #                  Version 0.1                 #"
+echo "    #            Powered by https://pa.ci          #"
 echo "    ################################################"
 
-# powered by https://pa.ci
 
 # 检查是否为root用户
 if [ $(id -u) != "0" ]; then

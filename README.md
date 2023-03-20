@@ -18,3 +18,19 @@ wget --no-check-certificate -O ping0.sh https://raw.githubusercontent.com/uselib
 
 ### 安装过程中需要输入任意用户名，如下：
 
+
+
+
+
+
+
+如需要删除ping0的程序和相关服务，依次执行以下命令即可：
+
+```
+systemctl stop ping0.service
+systemctl disable ping0.service
+rm -rf /usr/local/ping0
+rm -rf /etc/systemd/system/ping0.service
+systemctl daemon-reload
+```
+
