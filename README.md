@@ -30,6 +30,12 @@ wget --no-check-certificate -O ping0.sh https://raw.githubusercontent.com/uselib
 
 ![list](https://raw.githubusercontent.com/uselibrary/Ping0Monitor/main/data/list.jpg)
 
+程序的运行状态，可以使用以下命令查看：
+
+```
+systemctl status ping0.service
+```
+
 
 
 ### 3. 如何修改用户名
@@ -40,6 +46,13 @@ wget --no-check-certificate -O ping0.sh https://raw.githubusercontent.com/uselib
 
 ```
 ExecStart=/usr/local/ping0/ping0 username 
+```
+
+修改完成后，执行以下命令：
+
+```
+systemctl daemon-reload
+systemctl restart ping0.service
 ```
 
 
