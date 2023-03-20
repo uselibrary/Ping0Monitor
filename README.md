@@ -16,7 +16,9 @@
 wget --no-check-certificate -O ping0.sh https://raw.githubusercontent.com/uselibrary/Ping0Monitor/main/install.sh && chmod +x ping0.sh && bash ping0.sh
 ```
 
-### 安装过程中需要输入任意用户名，如下：
+### 安装过程如下：
+
+![install](https://raw.githubusercontent.com/uselibrary/Ping0Monitor/main/data/install.jpg)
 
 
 
