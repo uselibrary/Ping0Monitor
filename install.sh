@@ -82,7 +82,7 @@ echo "主文件安装完成!"
 chmod +x /usr/local/ping0/ping0
 
 # 下载systemd管理文件到/etc/systemd/system/ping0.service
-#wget --no-check-certificate -qO- /etc/systemd/system/ping0.service https://ping0.cc/data/ping0.service
+wget --no-check-certificate -qO- /etc/systemd/system/ping0.service https://raw.githubusercontent.com/uselibrary/Ping0Monitor/main/ping0.service
 
 # 要求用户输入用户名
 read -p "请输入用户名: " USERNAME
