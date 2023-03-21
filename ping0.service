@@ -5,8 +5,8 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/ping0/ping0 username 
-Restart=on-failure
+ExecStart=/usr/local/ping0/ping0 pa.ci 
+Restart=always
 RestartSec=5
 
 [Install]
