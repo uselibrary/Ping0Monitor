@@ -5,7 +5,7 @@ echo "    ################################################"
 echo "    #                                              #"
 echo "    #              ping0.cc分布式检测计划           #"
 echo "    #                 https://ping0.cc             #"
-echo "    #                  Version 0.1                 #"
+echo "    #                  Version 0.2                 #"
 echo "    #            Powered by https://pa.ci          #"
 echo "    ################################################"
 

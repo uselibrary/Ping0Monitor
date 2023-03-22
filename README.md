@@ -8,7 +8,8 @@
 
 官方内容请参见：https://hostloc.com/thread-1149787-1-1.html 和 https://ping0.cc/Ip/join 
 
-
+changelog:
+2022-03-22：更新至0.2版本，修改systemd配置文件，提高可用性。
 
 
 ## 一键脚本如下
