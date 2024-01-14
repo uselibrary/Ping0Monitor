@@ -13,7 +13,7 @@ echo "    ################################################"
 
 function uninstall()
 {
-    echo "开始卸载ping0..."
+    echo "卸载流程开始！"
     systemctl stop ping0.service
     systemctl disable ping0.service
     rm -rf /usr/local/ping0
@@ -54,37 +54,50 @@ function install_wget()
     fi
 
 }
+DownloadURL=null
+function getDownloadURL()
+{
+    # 使用 "arch" 命令检查系统架构，x86_64、arm32或arm64
+    # 部分设备上可能没有 arch 这个指令，这里改用等效的 uname -m
+    ARCH=$(uname -m)
+    case $ARCH in
+        x86_64)
+            # x86_64: 
+            DownloadURL=https://ping0.cc/data/ping0;;
+        armv7l)
+            #arm32:
+            DownloadURL=https://ping0.cc/data/ping0-arm;;
+        armv6l)
+            # arm32:
+            DownloadURL=https://ping0.cc/data/ping0-arm;;
+        arm64)
+            # arm64:
+            DownloadURL=https://ping0.cc/data/ping0-arm64;;
+        *)
+            echo "sorry！安装脚本还不支持你的系统架构!"
+            exit 1;;
+    esac
+
+}
 
 function install()
 {
-    install_wget
-    echo "开始安装ping0..."
+    echo "安装流程即将开始..."
 
-    # 使用 "arch" 命令检查系统架构，x86_64、arm32或arm64
-    if [ `arch` = "x86_64" ]; then
-        ARCH=x86_64
-    elif [ `arch` = "armv7l" ]; then
-        ARCH=arm32
-    elif [ `arch` = "aarch64" ]; then
-        ARCH=arm64
-    else
-        echo "不支持的系统架构!"
+    install_wget
+    getDownloadURL
+    if [ "$DownloadURL" = null ]; then
+        echo "获取下载链接失败!"
         exit 1
     fi
-
+    
+    echo "安装流程开始！"
     # 新建目录 /usr/local/ping0，并使用wget下载安装文件
     mkdir -p /usr/local/ping0
+
     echo "正在下载主程序..."
-    # x86_64: https://ping0.cc/data/ping0
-    # arm32: https://ping0.cc/data/ping0-arm
-    # arm64: https://ping0.cc/data/ping0-arm64
-    if [ "$ARCH" = "x86_64" ]; then
-        wget -qO- https://ping0.cc/data/ping0 > /usr/local/ping0/ping0
-    elif [ "$ARCH" = "arm32" ]; then
-        wget -qO- https://ping0.cc/data/ping0-arm > /usr/local/ping0/ping0
-    elif [ "$ARCH" = "arm64" ]; then
-        wget -qO- https://ping0.cc/data/ping0-arm64 > /usr/local/ping0/ping0
-    fi
+
+    wget -qO- $DownloadURL > /usr/local/ping0/ping0
 
     # 给安装文件添加执行权限
     chmod +x /usr/local/ping0/ping0
