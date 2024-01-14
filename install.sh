@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
+RED="\e[31m"           # 红色
+GREEN="\e[32m"         # 绿色
+YELLOW="\e[33m"        # 黄色
+BLUE="\e[34m"          # 蓝色
+CYAN="\e[36m"          # 青色
+RESET="\e[0m"          # 重置颜色
+
+color_message() {
+    local message="$1"
+    local color="$2"
+    echo -e "${color}${message}${RESET}"
+}
+
 clear
 echo "    ################################################"
 echo "    #                                              #"
@@ -13,13 +26,13 @@ echo "    ################################################"
 
 function uninstall()
 {
-    echo "卸载流程开始！"
+    color_message "卸载流程开始！" "$CYAN"
     systemctl stop ping0.service
     systemctl disable ping0.service
     rm -rf /usr/local/ping0
     rm -rf /etc/systemd/system/ping0.service
     systemctl daemon-reload
-    echo "卸载流程结束!"
+    color_message "卸载流程结束!" "$GREEN"
 }
 
 function install_wget()
@@ -28,7 +41,7 @@ function install_wget()
         echo "成功探测到所需的 wget 指令！"
         return 0
     fi
-    echo "没有探测到所需的 wget 指令，尝试自动安装 wget 软件包..."
+    color_message "没有探测到所需的 wget 指令，尝试自动安装 wget 软件包..." "$YELLOW"
 
     # 检查系统是否为RedHat系列或者Debian系列，如果不是则退出
     if [ -f /etc/redhat-release ]; then
@@ -41,8 +54,8 @@ function install_wget()
         OS=Ubuntu
         PM=apt-get
     else
-        echo "sorry！脚本不支持自动为你的操作系统安装wget！"
-        echo "请手动安装 wget！"
+        color_message "sorry！脚本不支持自动为你的操作系统安装wget！" "$RED"
+        color_message "请手动安装 wget！" "$YELLOW"
         exit 1
     fi
 
@@ -74,7 +87,7 @@ function getDownloadURL()
             # arm64:
             DownloadURL=https://ping0.cc/data/ping0-arm64;;
         *)
-            echo "sorry！安装脚本还不支持你的系统架构!"
+            color_message "sorry！安装脚本还不支持你的系统架构!" "$RED"
             exit 1;;
     esac
 
@@ -82,27 +95,31 @@ function getDownloadURL()
 
 function install()
 {
-    echo "安装流程即将开始..."
+    color_message "安装流程即将开始..." "$CYAN"
 
     install_wget
     getDownloadURL
+
     if [ "$DownloadURL" = null ]; then
-        echo "获取下载链接失败!"
+        color_message "获取下载链接失败!" "$RED"
         exit 1
     fi
     
-    echo "安装流程开始！"
+    color_message "安装流程开始！" "$CYAN"
     # 新建目录 /usr/local/ping0，并使用wget下载安装文件
     mkdir -p /usr/local/ping0
 
     echo "正在下载主程序..."
 
-    wget -qO- $DownloadURL > /usr/local/ping0/ping0
-
+    if ! { wget -qO- $DownloadURL > /usr/local/ping0/ping0; } 
+    then
+        color_message "下载失败！请尝试重新运行安装脚本！" "$RED"
+        exit 1
+    fi
     # 给安装文件添加执行权限
     chmod +x /usr/local/ping0/ping0
 
-    echo "主程序安装完毕! 开始配置 ping0 systemd 单元文件！"
+    echo "主程序已经下载完毕并添加运行权限! 开始配置 ping0 systemd 单元文件！"
 
     echo "
 [Unit]
@@ -134,16 +151,18 @@ WantedBy=multi-user.target
     systemctl start ping0.service
 
     echo "ping0 systemd 单元文件配置完毕！已启动ping0服务！"
-    echo "安装流程结束！"
+
+    color_message "安装流程结束！" "$GREEN"
 }
 
 # 检查是否为root用户
 if [ $(id -u) != "0" ]; then
-    echo "错误: 需要使用root权限执行此脚本!"
+    color_message "错误: 需要使用root权限执行此脚本!" "$RED"
     exit 1
 fi
 
-echo "欢迎来到 ping0 维护脚本！"
+color_message "欢迎来到 ping0 维护脚本！" "$CYAN"
+
 # 检查是否安装过，若有则提供卸载重装选项，没有则提供安装选项
 if [ -f /usr/local/ping0/ping0 ]; then
     echo "探测到系统中已存在ping0，如何处理？"
