@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/ping0/ping0 pa.ci 
+ExecStart=/usr/local/ping0/ping0 username 
 Restart=always
 RestartSec=5
 
